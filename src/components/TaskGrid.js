@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Task from './Task';
 import {
     makeStyles,
     Grid
 } from '@material-ui/core/';
-import { tasks } from '../data/Tasks';
+import { getTasks } from '../data/Tasks';
 
 const useStyles = makeStyles((theme) => ({
     taskItem: {
@@ -18,6 +18,13 @@ const useStyles = makeStyles((theme) => ({
 export default function TaskGrid() {
 
     const classes = useStyles();
+    const [tasks, setTasks] = useState([]);
+
+    useEffect(function () {
+        setTasks(getTasks());   
+        console.log(getTasks().length); 
+    }, []);
+
 
     return (
         <Grid container

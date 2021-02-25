@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import {
     makeStyles,
-    Hidden
+    Hidden,
+    Fab,
+    Button,
+    Modal, SimpleModal
 } from '@material-ui/core/';
 import NavBar from './NavBar';
 import MyDrawer from './MyDrawer';
 import TaskGrid from './TaskGrid';
+import AddIcon from '@material-ui/icons/Add';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -13,6 +18,11 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: 236
         },
         padding:theme.spacing(10,2)
+    },
+    fab: {
+        position: 'fixed',
+        bottom: theme.spacing(2),
+        right: theme.spacing(2),
     },
     offset: theme.mixins.toolbar
 }));
@@ -28,7 +38,7 @@ export default function MainView() {
     };
 
     return (
-        <div className={classes.root}>
+        <div>
             <NavBar 
                 handleDrawerToggle={handleDrawerToggle}/>
             <Hidden xsDown>
@@ -43,9 +53,17 @@ export default function MainView() {
                     onClose={handleDrawerToggle}/>
             </Hidden>
             <div className={classes.content}>
+                <Button color="secondary" startIcon={<FilterListIcon />}>Filters</Button>
                 <div className={classes.offset}>
                     <TaskGrid />
                 </div>
+                <Fab color="secondary" 
+                    aria-label="add"
+                    className={classes.fab} 
+                    onClick={()=> window.location.href = "/newTask"}
+                >
+                    <AddIcon />
+                </Fab>
             </div>
         </div>
     );

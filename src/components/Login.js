@@ -7,8 +7,8 @@ import {
     Avatar,
     Typography 
 } from '@material-ui/core';
-import PersonIcon from '@material-ui/icons/Person';
-import {user} from '../data/Users';
+import LockIcon from '@material-ui/icons/Lock';
+import { users } from '../data/Users';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -38,20 +38,24 @@ export default function Login() {
     const [password, setPassword] = useState("");
 
     const logIn = () => {
-        if(userName === user.username && password === user.password){
-            localStorage.setItem("loggingStaus", "logged");
-            localStorage.setItem("username", userName);
-            localStorage.setItem("userpassword", password);
-            window.location.href = "/mainView";
+        if (users.has(userName)){
+            if(users.get(userName).password === password){
+                localStorage.setItem("loggingStaus", "logged");
+                localStorage.setItem("username", userName);
+                localStorage.setItem("userpassword", password);
+                window.location.href = "/mainView";
+            }else{
+                alert("Oops, incorrect password");
+            }
         }else{
-            alert("Oops, try again")
+            alert("Oops, user not found");
         }
     }
 
     return (
         <Container component="main" maxWidth="xs" className={classes.paper}>
             <Avatar className={classes.avatar}>
-                <PersonIcon />
+                <LockIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
                 Log In

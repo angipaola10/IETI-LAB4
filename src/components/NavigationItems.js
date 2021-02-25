@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core/';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import EditIcon from '@material-ui/icons/Edit';
+import { users } from '../data/Users';
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -49,14 +50,14 @@ export default function NavigationItems(){
                     </Grid>
                     <Grid item className={classes.m1}>
                         <Typography >
-                            User Name
+                            {localStorage.getItem("username")}
                         </Typography>
                         <Typography>
-                            useremail@mail.com
+                            {users.get(localStorage.getItem("username")).email}
                         </Typography>
                     </Grid>
                     <Grid container justify={"flex-end"}>
-                        <IconButton>
+                        <IconButton onClick={()=>{window.location.href="/userProfile"}}>
                             <EditIcon />
                         </IconButton>
                     </Grid>

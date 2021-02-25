@@ -1,6 +1,8 @@
 import React,{useEffect} from 'react';
 import MainView from './components/MainView';
 import Login from './components/Login';
+import NewTask from './components/NewTask';
+import UserProfile from './components/UserProfile';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 function App() {
@@ -13,9 +15,10 @@ function App() {
     }
   }, []);
 
-  const validate = () => {
-    if (localStorage.getItem("loggingStaus") === "logged") return "/mainView";
-    return "/";
+  const validate = ( path ) => {
+    if (localStorage.getItem("loggingStaus") === "logged" && path === "/") return "/mainView";
+    if (localStorage.getItem("loggingStaus") !== "logged") return "/";
+    return path;
   }
 
   const loginView = () => (
@@ -26,11 +29,21 @@ function App() {
     <MainView />
   );
 
+  const newTask = () => (
+    <NewTask />
+  );
+
+  const userProfile = () => (
+    <UserProfile />
+  );
+
 
   return (
     <Router>
           <Route exact path="/" component={loginView} />
           <Route path="/mainView" component={mainView} />
+          <Route path="/newTask" component={NewTask} />
+          <Route path="/userProfile" component={userProfile} />
     </Router>
   );
 }
