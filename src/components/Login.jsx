@@ -1,14 +1,8 @@
 import React, {useState} from 'react';
-import {
-    Container,
-    TextField,
-    Button,
-    makeStyles,
-    Avatar,
-    Typography 
-} from '@material-ui/core';
+import { Container, TextField, Button, makeStyles, Avatar, Typography } from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
 import { users } from '../data/Users';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -36,6 +30,7 @@ export default function Login() {
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const history = useHistory();
 
     const logIn = () => {
         if (users.has(userName)){
@@ -43,7 +38,7 @@ export default function Login() {
                 localStorage.setItem("loggingStaus", "logged");
                 localStorage.setItem("username", userName);
                 localStorage.setItem("userpassword", password);
-                window.location.href = "/mainView";
+                history.push("/mainView");
             }else{
                 alert("Oops, incorrect password");
             }

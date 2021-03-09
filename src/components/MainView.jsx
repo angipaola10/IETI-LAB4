@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
-import {
-    makeStyles,
-    Hidden,
-    Fab,
-    Button,
-    Modal, SimpleModal
-} from '@material-ui/core/';
+import { makeStyles, Hidden, Fab, Button } from '@material-ui/core/';
 import NavBar from './NavBar';
 import MyDrawer from './MyDrawer';
 import TaskGrid from './TaskGrid';
 import AddIcon from '@material-ui/icons/Add';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -30,12 +25,11 @@ const useStyles = makeStyles((theme) => ({
 export default function MainView() {
 
     const classes = useStyles();
-    
     const [mobileOpen, setMobileOpen] = useState(false);
-
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
+    const history = useHistory();
 
     return (
         <div>
@@ -60,7 +54,7 @@ export default function MainView() {
                 <Fab color="secondary" 
                     aria-label="add"
                     className={classes.fab} 
-                    onClick={()=> window.location.href = "/newTask"}
+                    onClick={()=> history.push("/newTask")}
                 >
                     <AddIcon />
                 </Fab>

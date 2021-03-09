@@ -1,21 +1,12 @@
 import React, { useState } from 'react';
 import DateFnsUtils from '@date-io/date-fns';
-import {
-    Container,
-    TextField,
-    Fab,
-    makeStyles,
-    Avatar,
-    Typography,
-} from '@material-ui/core';
+import { Container, TextField, Fab, makeStyles, Avatar, Typography } from '@material-ui/core';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker,
-} from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import CheckIcon from '@material-ui/icons/Check';
 import { users } from '../data/Users';
-import { addTask, getTasks } from '../data/Tasks';
+import { postTask } from '../clients/TaskPlannerClient';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -45,13 +36,12 @@ const useStyles = makeStyles((theme) => ({
 export default function NewTask() {
 
     const classes = useStyles();
-
     const [description, setDescription] = useState(""); 
     const [responsible, setResponsible] = useState("");
     const [status, setStatus] = useState("Ready");
     const [dueDate, setDueDate] = useState(new Date());
-
     const statusOptions = ['Ready', 'In progress', 'Done'];
+    const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -66,10 +56,14 @@ export default function NewTask() {
                     email: users.get(responsible).email
                 },
                 status: status,
-                dueDate: dueDate.toLocaleDateString()
+                dueDate: dueDate.valueOf()
             };
-            addTask(newTask);
-            console.log(getTasks().length);
+            postTask ( newTask )
+                .then ( () => { 
+                    alert("Task registered");
+                    history.push("/mainView");
+                })
+                .catch( () => alert("Oops, an error has ocurred"));
         }else{
             alert("Oops, the responsible is not registered as user!");
         }
